@@ -1,0 +1,48 @@
+﻿@page
+@model ProiectContoare.Pages.Contoare.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Contor[0].NumarSerie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contor[0].ValoareActuala)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contor[0].ConsumatorId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Contor) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumarSerie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValoareActuala)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ConsumatorId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ContorId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ContorId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ContorId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

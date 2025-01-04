@@ -1,0 +1,54 @@
+﻿@page
+@model ProiectContoare.Pages.Plati.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Plata[0].DataPlatii)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plata[0].SumaPlatita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plata[0].ModalitateDePlata)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plata[0].Factura)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Plata) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPlatii)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SumaPlatita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModalitateDePlata)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Factura.FacturaId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.PlataId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.PlataId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PlataId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

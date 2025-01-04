@@ -1,0 +1,47 @@
+﻿@page
+@model ProiectContoare.Pages.Tarife.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tarif</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Tarif.TarifId" />
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Tarif.PretPeMetruCub" class="control-label"></label>
+                <input asp-for="Tarif.PretPeMetruCub" class="form-control" />
+                <span asp-validation-for="Tarif.PretPeMetruCub" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Tarif.DataInceput" class="control-label"></label>
+                <input asp-for="Tarif.DataInceput" class="form-control" />
+                <span asp-validation-for="Tarif.DataInceput" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tarif.DataSfarsit" class="control-label"></label>
+                <input asp-for="Tarif.DataSfarsit" class="form-control" />
+                <span asp-validation-for="Tarif.DataSfarsit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

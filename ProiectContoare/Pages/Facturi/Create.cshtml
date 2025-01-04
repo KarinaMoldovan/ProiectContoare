@@ -1,0 +1,41 @@
+﻿@page
+@model ProiectContoare.Pages.Facturi.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Înregistrează Citire Contor</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="ContorId">Selectează Contor</label>
+                <select asp-for="ContorId" class="form-control" asp-items="ViewBag.ContorId"></select>
+                <span asp-validation-for="ContorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="ValoareActuala">Introduceți Citirea Actuală</label>
+                <input asp-for="ValoareActuala" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="ValoareActuala" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Înregistrează Citire" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Înapoi la Listă</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
