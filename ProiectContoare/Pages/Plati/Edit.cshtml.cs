@@ -30,13 +30,19 @@ namespace ProiectContoare.Pages.Plati
                 return NotFound();
             }
 
-            var plata =  await _context.Plata.FirstOrDefaultAsync(m => m.PlataId == id);
+            var plata = await _context.Plata.FirstOrDefaultAsync(m => m.PlataId == id);
             if (plata == null)
             {
                 return NotFound();
             }
             Plata = plata;
-           ViewData["FacturaId"] = new SelectList(_context.Factura, "FacturaId", "FacturaId");
+
+            // Populare opțiuni dropdown pentru ModalitateDePlata
+            //ViewData["ModalitateDePlataOptions"] = new SelectList(
+            //    new List<string> { "Numerar", "Card Bancar", "Transfer Bancar" }
+            //);
+
+            ViewData["FacturaId"] = new SelectList(_context.Factura, "FacturaId", "FacturaId");
             return Page();
         }
 

@@ -30,14 +30,22 @@ namespace ProiectContoare.Pages.Contoare
                 return NotFound();
             }
 
-            var contor =  await _context.Contor.FirstOrDefaultAsync(m => m.ContorId == id);
+            var contor = await _context.Contor.FirstOrDefaultAsync(m => m.ContorId == id);
             if (contor == null)
             {
                 return NotFound();
             }
             Contor = contor;
+
+            // Populare dropdown cu email-urile consumatorilor
+            ViewData["ConsumatorId"] = new SelectList(
+                await _context.Consumator.Select(c => new { c.ConsumatorId, c.Email }).ToListAsync(),
+                "ConsumatorId", "Email"
+            );
+
             return Page();
         }
+
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.

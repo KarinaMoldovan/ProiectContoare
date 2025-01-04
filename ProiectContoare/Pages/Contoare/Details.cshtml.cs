@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProiectContoare.Data;
 using ProiectContoare.Models;
@@ -28,16 +29,17 @@ namespace ProiectContoare.Pages.Contoare
                 return NotFound();
             }
 
-            var contor = await _context.Contor.FirstOrDefaultAsync(m => m.ContorId == id);
-            if (contor == null)
+            Contor = await _context.Contor
+                .Include(c => c.Consumator) // Include informațiile consumatorului
+                .FirstOrDefaultAsync(m => m.ContorId == id);
+
+            if (Contor == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Contor = contor;
-            }
+
             return Page();
         }
+
     }
 }
