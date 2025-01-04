@@ -23,7 +23,9 @@ namespace ProiectContoare.Pages.Contoare
 
         public async Task OnGetAsync()
         {
-            Contor = await _context.Contor.ToListAsync();
+            Contor = await _context.Contor
+                .Include(c => c.Consumator)
+                .ToListAsync();
         }
     }
 }

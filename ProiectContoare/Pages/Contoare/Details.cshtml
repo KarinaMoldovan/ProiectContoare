@@ -24,12 +24,13 @@
             @Html.DisplayFor(model => model.Contor.ValoareActuala)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Contor.ConsumatorId)
+            Email Consumator
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Contor.ConsumatorId)
+            @Model.Contor.Consumator?.Email
         </dd>
     </dl>
+
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Contor.ContorId">Edit</a> |

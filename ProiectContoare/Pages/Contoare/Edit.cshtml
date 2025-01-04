@@ -29,9 +29,10 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Contor.ConsumatorId" class="control-label"></label>
-                <input asp-for="Contor.ConsumatorId" class="form-control" />
+                <select asp-for="Contor.ConsumatorId" class="form-control" asp-items="ViewBag.ConsumatorId"></select>
                 <span asp-validation-for="Contor.ConsumatorId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

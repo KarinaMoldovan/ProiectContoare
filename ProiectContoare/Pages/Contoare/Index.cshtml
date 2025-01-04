@@ -20,29 +20,31 @@
                 @Html.DisplayNameFor(model => model.Contor[0].ValoareActuala)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contor[0].ConsumatorId)
+                Email Consumator
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Contor) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumarSerie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValoareActuala)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.ConsumatorId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ContorId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ContorId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ContorId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Contor)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumarSerie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValoareActuala)
+                </td>
+                <td>
+                    @item.Consumator?.Email
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ContorId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ContorId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ContorId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
