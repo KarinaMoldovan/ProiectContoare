@@ -1,10 +1,33 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bun venit în aplicația de gestionare a contoarelor de apă!</h1>
+</div>
+
+<div style="display: flex; align-items: center; margin: 20px;">
+    <!-- Secțiunea cu imaginea -->
+    <div style="flex: 1; text-align: center;">
+        <img src="css/contorApa.webp" alt="Contor de apă" style="max-width: 300px; max-height: 300px" />
+    </div>
+
+    <!-- Secțiunea cu mesajele -->
+    <div style="flex: 2; padding-left: 20px;">
+        <p class="lead">
+            Această aplicație web vă permite să:
+        </p>
+        <ul class="list-unstyled">
+            <li>- Înregistrați consumul contoarelor de apă.</li>
+            <li>- Generați facturi în funcție de consum.</li>
+            <li>- Efectuați plăți pentru facturi.</li>
+            <li>- Vizualizați tarifele pentru consumul de apă.</li>
+            <li>- Gestionați contul dvs. ca și consumator.</li>
+        </ul>
+        <p>
+            Începeți prin a explora funcțiile aplicației și bucurați-vă de o experiență rapidă și ușoară de gestionare a consumului de apă!
+        </p>
+    </div>
 </div>
