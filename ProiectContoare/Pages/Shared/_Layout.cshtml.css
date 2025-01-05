@@ -1,48 +1,202 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Styling tematic pentru apă și contoarele de apă */
 
+/* Navbar Brand */
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-word;
+    font-family: 'Arial', sans-serif;
+    color: #004a8f; /* Albastru ușor mai închis */
+    font-weight: bold;
 }
 
+/* Linkuri generale */
 a {
-  color: #0077cc;
+    color: #0066cc;
+    text-decoration: none;
 }
 
+    a:hover {
+        color: #003d80;
+        text-decoration: underline;
+    }
+
+.navbar-nav .nav-link {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px; /* Spațiu mai mare între elemente */
+    font-size: 0.55rem; /* Text mai mic */
+    color: #0066cc;
+    transition: color 0.3s;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: darkgray; /* Schimbare culoare la hover */
+    }
+
+/* Header - Fără fundal */
+header {
+    color: #004a8f; /* Text albastru închis */
+    padding: 5px 5px;
+    text-align: center;
+    font-size: 1rem; /* Text mai mic */
+    margin-bottom: 10px; /* Spațiu între header și conținut */
+}
+
+/* Puncte mai apropiate de text */
+ul.navbar-nav li {
+    margin: 0 5px; /* Spațiu între butoanele din navbar */
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+/* Butoane primare */
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #007acc; /* Albastru inspirat de apă */
+    border-color: #005fa3;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 15px; /* Spațiu între butoane */
 }
 
+    .btn-primary:hover {
+        background-color: #005fa3;
+        border-color: #004b7a;
+    }
+
+/* Navigare activă */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #007acc;
+    border-color: #005fa3;
 }
 
+/* Bordiuri */
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #cce7ff; /* Albastru pal */
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #cce7ff;
 }
 
+/* Umbre */
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 112, 204, 0.2); /* Albastru translucid */
 }
 
+/* Politici acceptare */
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    color: #fff;
+    background-color: #007acc;
+    border: 1px solid #005fa3;
 }
 
+/* Footer */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 50px;
+    background-color: #004a8f; /* Fundal albastru ușor mai închis */
+    color: white;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px 0;
 }
+
+/* Adăugat stil pentru un aspect fluid, inspirat de apă */
+body {
+    background: linear-gradient(to bottom, #e1f0ff, #ffffff); /* Gradient deschis albastru-alb */
+    font-family: 'Verdana', sans-serif;
+    color: #003d80;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #004a8f; /* Albastru ușor mai închis */
+}
+
+/* Stiluri pentru imagini */
+img {
+    border: 2px solid #cce7ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 112, 204, 0.2);
+}
+
+/* Stiluri adiționale pentru butoane */
+button {
+    border-radius: 5px;
+}
+
+/* Alte stiluri */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+    ul li {
+        display: flex;
+        align-items: center; /* Centrare verticală a punctelor */
+        margin: 5px 0;
+    }
+
+        ul li::before {
+            content: "• ";
+            color: #007acc;
+            font-weight: bold;
+            margin-right: 5px; /* Spațiu redus între punct și text */
+            font-size: 1.2rem; /* Mărime consistentă cu textul */
+        }
+
+/* Styling pentru Login și Register */
+form {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #cce7ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 112, 204, 0.2);
+}
+
+    form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #004a8f;
+    }
+
+    form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #cce7ff;
+        border-radius: 5px;
+        box-shadow: inset 0 2px 4px rgba(0, 112, 204, 0.1);
+    }
+
+        form input:focus {
+            border-color: #007acc;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 112, 204, 0.4);
+        }
+
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007acc;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        form button:hover {
+            background-color: #005fa3;
+        }

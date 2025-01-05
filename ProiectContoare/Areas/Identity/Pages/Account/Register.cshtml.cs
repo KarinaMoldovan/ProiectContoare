@@ -121,56 +121,79 @@ namespace ProiectContoare.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await
-            _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            // Creează utilizatorul
             var user = CreateUser();
-            await _userStore.SetUserNameAsync(user, Input.Email,
-            CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, Input.Email,
-            CancellationToken.None);
-            var result = await _userManager.CreateAsync(user,
-            Input.Password);
-            Consumator.Email = Input.Email;
-            _context.Consumator.Add(Consumator);
-            await _context.SaveChangesAsync();
+            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+            // Încearcă să creezi contul utilizatorului
+            var result = await _userManager.CreateAsync(user, Input.Password);
+
+            // Verifică dacă contul a fost creat cu succes
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-               
-                var userId = await _userManager.GetUserIdAsync(user);
-                var code = await
-                _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code =
-                WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new
+
+                // Adaugă utilizatorul în rolul "User"
+                var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                if (!roleResult.Succeeded)
                 {
-                   area = "Identity",
-                   userId = userId,
-                   code = code,
-                   returnUrl = returnUrl
-                },
-                protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email", $"Please confirm your account by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}' > clicking here </ a >.");
-            if(_userManager.Options.SignIn.RequireConfirmedAccount)
-                {
-                    return RedirectToPage("RegisterConfirmation", new
+                    // Adaugă erorile legate de rol
+                    foreach (var error in roleResult.Errors)
                     {
-                        email = Input.Email,
-                        returnUrl = returnUrl
-                    });
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return Page();
+                }
+
+                // Creează înregistrarea în tabelul Consumator
+                Consumator.Email = Input.Email;
+                try
+                {
+                    _context.Consumator.Add(Consumator);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Șterge utilizatorul dacă adăugarea în Consumator eșuează
+                    await _userManager.DeleteAsync(user);
+                    _logger.LogError(ex, "Error while saving consumer data.");
+                    ModelState.AddModelError(string.Empty, "An error occurred while creating the consumer record. Please try again.");
+                    return Page();
+                }
+
+                // Generare token pentru confirmarea email-ului
+                var userId = await _userManager.GetUserIdAsync(user);
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                    protocol: Request.Scheme);
+
+                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                 }
                 else
                 {
-                    await _signInManager.SignInAsync(user,
-                   isPersistent: false);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
-
             }
+
+            // Adaugă erorile în ModelState dacă utilizatorul nu a fost creat
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
             return Page();
         }
 
