@@ -1,12 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProiectContoare.Data;
+using Microsoft.AspNetCore.Identity;
+using ProiectContoare.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ProiectContoareContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProiectContoareContext") ?? throw new InvalidOperationException("Connection string 'ProiectContoareContext' not found.")));
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<LibraryIdentityContext>();
+
+builder.Services.AddDbContext<LibraryIdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProiectContoareContext") ?? throw new InvalidOperationException("Connection string 'ProiectContoareContext' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true) .AddEntityFrameworkStores<LibraryIdentityContext>();
+
 
 var app = builder.Build();
 
