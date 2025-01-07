@@ -74,6 +74,7 @@ namespace ProiectContoare.Pages.Facturi
                 DataEmitere = DateTime.Now,
                 Suma = sumaFactura,
                 ContorId = ContorId,
+                Tarif = tarif
             };
             // Salvăm modificările în baza de date
             _context.Contor.Update(contor);

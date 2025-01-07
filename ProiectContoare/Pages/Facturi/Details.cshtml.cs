@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,14 +10,15 @@ namespace ProiectContoare.Pages.Facturi
 {
     public class DetailsModel : PageModel
     {
-        private readonly ProiectContoare.Data.ProiectContoareContext _context;
+        private readonly ProiectContoareContext _context;
 
-        public DetailsModel(ProiectContoare.Data.ProiectContoareContext context)
+        public DetailsModel(ProiectContoareContext context)
         {
             _context = context;
         }
 
         public Factura Factura { get; set; } = default!;
+        public int? PlataId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,15 +27,20 @@ namespace ProiectContoare.Pages.Facturi
                 return NotFound();
             }
 
-            var factura = await _context.Factura.FirstOrDefaultAsync(m => m.FacturaId == id);
-            if (factura == null)
+            Factura = await _context.Factura
+                .Include(f => f.Contor)
+                .Include(f => f.Tarif)
+                .Include(f => f.Plata)
+                .FirstOrDefaultAsync(m => m.FacturaId == id);
+
+            if (Factura == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Factura = factura;
-            }
+
+          
+            PlataId = Factura.Plata?.PlataId;
+
             return Page();
         }
     }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +12,9 @@ namespace ProiectContoare.Pages.Plati
     [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
-        private readonly ProiectContoare.Data.ProiectContoareContext _context;
+        private readonly ProiectContoareContext _context;
 
-        public DeleteModel(ProiectContoare.Data.ProiectContoareContext context)
+        public DeleteModel(ProiectContoareContext context)
         {
             _context = context;
         }
@@ -31,16 +29,15 @@ namespace ProiectContoare.Pages.Plati
                 return NotFound();
             }
 
-            var plata = await _context.Plata.FirstOrDefaultAsync(m => m.PlataId == id);
+            Plata = await _context.Plata
+                .Include(p => p.Factura) 
+                .FirstOrDefaultAsync(m => m.PlataId == id);
 
-            if (plata == null)
+            if (Plata == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Plata = plata;
-            }
+
             return Page();
         }
 

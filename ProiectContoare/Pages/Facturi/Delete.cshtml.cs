@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +12,17 @@ namespace ProiectContoare.Pages.Facturi
     [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
-        private readonly ProiectContoare.Data.ProiectContoareContext _context;
+        private readonly ProiectContoareContext _context;
 
-        public DeleteModel(ProiectContoare.Data.ProiectContoareContext context)
+        public DeleteModel(ProiectContoareContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public Factura Factura { get; set; } = default!;
+
+        public int? PlataId { get; set; } // ID-ul plății asociate
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,16 +31,20 @@ namespace ProiectContoare.Pages.Facturi
                 return NotFound();
             }
 
-            var factura = await _context.Factura.FirstOrDefaultAsync(m => m.FacturaId == id);
+            Factura = await _context.Factura
+                .Include(f => f.Contor) // Include relația cu Contor
+                .Include(f => f.Tarif) // Include relația cu Tarif
+                .Include(f => f.Plata) // Include relația cu Plata
+                .FirstOrDefaultAsync(m => m.FacturaId == id);
 
-            if (factura == null)
+            if (Factura == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Factura = factura;
-            }
+
+            // Setează PlataId dacă Plata există
+            PlataId = Factura.Plata?.PlataId;
+
             return Page();
         }
 
